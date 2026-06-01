@@ -1,11 +1,6 @@
 import Groq from 'groq-sdk'
 import { CreateAssignmentDTO } from '../types'
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-  timeout: 120000,
-})
-
 const buildSectionPrompt = (
   subject: string,
   title: string,
@@ -51,8 +46,13 @@ Rules:
 - Return ONLY valid JSON`
 }
 
-export const generateWithAI = async (assignment: CreateAssignmentDTO) => {
-  const sections = []
+export const generateWithAI = async (assignment: CreateAssignmentDTO): Promise<any> => {
+  const groq = new Groq({
+    apiKey: process.env.GROQ_API_KEY!,
+    timeout: 120000,
+  })
+
+  const sections: any[] = []
   const sectionLetters = ['A', 'B', 'C', 'D', 'E']
 
   for (let i = 0; i < assignment.questionTypes.length; i++) {
@@ -89,7 +89,7 @@ export const generateWithAI = async (assignment: CreateAssignmentDTO) => {
     await new Promise(resolve => setTimeout(resolve, 1000))
   }
 
-  const totalMarks = sections.reduce((sum, s) => sum + s.totalMarks, 0)
+  const totalMarks = sections.reduce((sum: number, s: any) => sum + s.totalMarks, 0)
 
   return {
     title: assignment.title,
