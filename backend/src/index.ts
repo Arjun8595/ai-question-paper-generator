@@ -15,44 +15,21 @@ dotenv.config()
 const app = express()
 const server = http.createServer(app)
 
-// Middleware
-// app.use(cors({
-//   origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-//   credentials: true,
-// }))
-// app.use(express.json())
+app.use(cors())
+app.use(express.json())
 
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://ai-question-paper-generator-xi.vercel.app',
-  ],
-  credentials: true,
-}))
-
-// Database
 connectDB()
-
-// Socket
 initSocket(server)
-
-// Workers
 startGenerationWorker()
 startPdfWorker()
 
-// Routes
-// app.use('/api/assignments', assignmentRoutes)
-// app.use('/api/assignments', paperRoutes)
-// Routes
 app.use('/api/assignments', assignmentRoutes)
 app.use('/api/assignments', paperRoutes)
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' })
 })
 
-// Error Handler
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
