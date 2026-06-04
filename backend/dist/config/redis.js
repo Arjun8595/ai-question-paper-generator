@@ -7,8 +7,8 @@ const ioredis_1 = __importDefault(require("ioredis"));
 const redis = new ioredis_1.default({
     host: process.env.REDIS_HOST || 'localhost',
     port: Number(process.env.REDIS_PORT) || 6379,
-    password: process.env.REDIS_PASSWORD,
-    tls: process.env.REDIS_HOST?.includes('upstash') ? {} : undefined,
+    password: process.env.REDIS_PASSWORD || undefined,
+    tls: {},
 });
 redis.on('connect', () => console.log('Redis connected ✅'));
 redis.on('error', (err) => console.error('Redis error:', err));
