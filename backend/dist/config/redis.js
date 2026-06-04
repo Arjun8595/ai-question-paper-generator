@@ -4,12 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ioredis_1 = __importDefault(require("ioredis"));
-const redis = new ioredis_1.default({
-    host: process.env.REDIS_HOST || 'localhost',
-    port: Number(process.env.REDIS_PORT) || 6379,
-    password: process.env.REDIS_PASSWORD || undefined,
-    tls: {},
-});
+const redisUrl = `rediss://:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`;
+const redis = new ioredis_1.default(redisUrl);
 redis.on('connect', () => console.log('Redis connected ✅'));
 redis.on('error', (err) => console.error('Redis error:', err));
 exports.default = redis;

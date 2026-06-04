@@ -5,6 +5,8 @@ const bullmq_1 = require("bullmq");
 const connection = {
     host: process.env.REDIS_HOST || 'localhost',
     port: Number(process.env.REDIS_PORT) || 6379,
+    password: process.env.REDIS_PASSWORD,
+    tls: {},
 };
 const startPdfWorker = () => {
     const worker = new bullmq_1.Worker('pdf', async (job) => {

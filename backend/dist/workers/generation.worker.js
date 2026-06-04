@@ -12,6 +12,8 @@ const Assignment_1 = __importDefault(require("../models/Assignment"));
 const connection = {
     host: process.env.REDIS_HOST || 'localhost',
     port: Number(process.env.REDIS_PORT) || 6379,
+    password: process.env.REDIS_PASSWORD,
+    tls: {},
 };
 const startGenerationWorker = () => {
     const worker = new bullmq_1.Worker('generation', async (job) => {
