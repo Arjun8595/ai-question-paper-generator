@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const assignment_controller_1 = require("../controllers/assignment.controller");
+const validate_1 = require("../middleware/validate");
+const router = (0, express_1.Router)();
+router.post('/', validate_1.validateAssignment, assignment_controller_1.createAssignment);
+router.get('/', assignment_controller_1.getAssignments);
+router.get('/:id', assignment_controller_1.getAssignmentById);
+router.post('/:id/regenerate', assignment_controller_1.regenerateAssignment);
+exports.default = router;
